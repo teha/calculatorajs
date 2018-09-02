@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html ng-app="myCalculator">
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<head>		
+	<title>Calculator</title>
+<style>
+	h1 { 
+		color: teal;
+		text-align: center;
+	}
+	hr {
+	    align: 0;
+        border: none;
+        width: 290px;
+        height: 1px;
+        background-color: blue;
+    }
+    .calcstyle {
+    	margin: 20px auto;
+        padding: 10px;
+        border: black solid 2px;
+        text-align: center;
+        width: 300px;
+        height: 190px;
+        background: powderblue;
+    }
+    .btnstyle {
+    	width: 50px;
+        height: 50px;
+    }    
+</style>
+	<script>
+	
+	var calculator = angular.module("myCalculator", []);
+	calculator.controller("Controller", function ($scope) {
+
+	$scope.plusFunc = function plusFunc() {
+		var number = Number($scope.input || 0);
+        var number2 = Number($scope.input2 || 0);
+        
+        // check input values are numbers and not text
+        if(checkValues(number, number2)){
+        	$scope.result = number+number2;		
+		}
+		else {
+			$scope.result = "Use number format"
+			clearUserInputsFunc();
+		}
+	}
+	
+	$scope.minusFunc = function minusFunc() {
+		var number = Number($scope.input || 0);
+        var number2 = Number($scope.input2 || 0);
+        
+        if(checkValues(number,number2)) {
+        	$scope.result = number-number2;		
+		}
+		else {
+			$scope.result = "Use number format"
+			clearUserInputsFunc();
+		}
+	}
+	
+	$scope.asterixFunc = function asterixFunc() {
+		var number = Number($scope.input || 0);
+        var number2 = Number($scope.input2 || 0);
+        
+        if(checkValues(number,number2)) {
+        	$scope.result = number*number2;		
+		}
+		else {
+			$scope.result = "Use number format"
+			clearUserInputsFunc();
+		}
+	}
+	
+	$scope.divideFunc = function divideFunc() {
+		var number = Number($scope.input || 0);
+        var number2 = Number($scope.input2 || 0);
+        
+        if(number2 != 0){
+            if(checkValues(number,number2)) {       
+            	$scope.result = number/number2;	
+    		}
+            else {
+    			$scope.result = "Use number format"
+    			clearUserInputsFunc();
+            }	
+    	}
+   	 	else {
+    		$scope.result = "Cannot divide with zero"
+    	}
+    }
+	
+	$scope.clearFunc = function clearFunc() {
+		$scope.input = 0;
+        $scope.input2 = 0;
+        $scope.result = "";		
+		}
+	
+	function clearUserInputsFunc() {
+		$scope.input = 0;
+        $scope.input2 = 0;	
+		}
+		
+	});
+	
+	function checkValues(number, number2){
+		if(!isNaN(number) && !isNaN(number2))
+			return true;
+		else
+			return false;
+	}
+	</script>
+	
+</head>
+<body ng-app="myCalculator" ng-controller="Controller">
+	<h1>Calculator</h1>
+	<div class = "calcstyle">	
+		<input type="input" class="numfield" ng-model="input" ng-init="input='0'"/>
+		<input type="input" class="numfield" ng-model="input2" ng-init="input2='0'"/>
+		<hr>			
+		<input type="input" id="result_field" class="numfield" ng-model="result"/>
+		<hr>					
+		<div>
+			<button class="btnstyle" ng-click="plusFunc()">+</button>
+			<button class="btnstyle" ng-click="minusFunc()">-</button>
+			<button class="btnstyle" ng-click="asterixFunc()">*</button>
+			<button class="btnstyle" ng-click="divideFunc()">/</button>				
+		</div>
+		<br>
+		<div>
+			<button class="btnstyle" ng-click="clearFunc()">C</button>			
+		</div>	
+	</div>			
+</body>
+</html>
